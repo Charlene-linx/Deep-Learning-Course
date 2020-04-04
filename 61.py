@@ -1,13 +1,36 @@
-import matplotlib.pyplot as pl
-import numpy as np
-#pl.rcParams['font.sans-serif'] = 'SeimHei'
-#pl.rcParams['axes.unicode_minus'] = 'False'
-x = np.array([137.97,104.50,100.00,124.32,79.20,99.00,124.00,114.00,106.69,138.05,53.75,46.91,68.00,63.02,81.26,86.21])
-y = np.array([145.00,110.00,93.00,116.00,65.32,104.00,118.00,91.00,62.00,133.00,51.00,45.00,78.50,69.65,75.69,95.30])
-pl.scatter(x,y,color="red")
-pl.title("商品房销售记录",color="blue",fontsize=16)
-pl.xlim(30,200)
-pl.ylim(30,200)
-pl.xlabel('面积（平方米）',fontsize=16)
-pl.ylabel("价格(万元)",fontsize=14)
-pl.show()
+import matplotlib.pyplot as plt
+from PIL import Image
+
+plt.rcParams["font.sans-serif"]="SimHei"
+
+img = Image.open("lena.tiff")
+img_r,img_g,img_b = img.split()
+plt.figure(figsize=(10,10))
+plt.suptitle("图像基本操作",fontsize=20,color="blue")
+
+plt.subplot(221)
+plt.axis("off")
+imgr = img_r.resize((50,50))
+plt.imshow(imgr,cmap="gray")
+plt.title("R-缩放",fontsize=14)
+
+plt.subplot(222)
+imgg = img_g.transpose(Image.FLIP_LEFT_RIGHT)
+imggg = imgg.transpose(Image.ROTATE_270)
+plt.imshow(imggg,cmap="gray")
+plt.title("G-镜像+旋转",fontsize=14)
+
+plt.subplot(223)
+plt.axis("off")
+imgb = img_b.crop((0,0,300,300))
+plt.imshow(imgb,cmap="gray")
+plt.title("B-裁剪",fontsize=14)
+
+img_rgb=Image.merge("RGB",[img_r,img_g,img_b])
+plt.subplot(224)
+plt.axis("off")
+plt.imshow(img_rgb)
+plt.title("RGB",fontsize=14)
+img_rgb.save("text.png")
+
+plt.show()
